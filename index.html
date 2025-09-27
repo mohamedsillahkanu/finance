@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Weekly Reports 2025 - Financial Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>   
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="repo-header">
+                <div class="logos-container">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=150&h=150&fit=crop&crop=center" alt="Finance Logo" class="logo">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=150&h=150&fit=crop&crop=center" alt="Banking Logo" class="logo">
+                    <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=150&h=150&fit=crop&crop=center" alt="Investment Logo" class="logo">
+                    <img src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=150&h=150&fit=crop&crop=center" alt="Analytics Logo" class="logo">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="CFO Logo" class="logo">
+                    <img src="https://github.com/mohamedsillahkanu/file-repository/raw/98d6a776c09d4c21b1e4fb54d640e152ba14c253/ICF-SL.jpg" alt="ICF-SL Logo" class="logo">
+                </div>
+                <div class="repo-info">
+                    <h1 class="repo-title">Finance Weekly Reports</h1>
+                    <div class="year-badge">2025</div>
+                    <p class="repo-description">Financial Management & Reporting System</p>
+                </div>
+                <div class="admin-info" id="adminInfo">
+                    Logged in as Admin: <span id="currentUser"></span>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            
+            <div class="stats-bar">
+                <div class="stat-item">
+                    💰 <span class="stat-number" id="totalReports">0</span> financial reports submitted
+                </div>
+                <div class="stat-item">
+                    👥 <span class="stat-number">10</span> finance team members
+                </div>
+                <div class="stat-item">
+                    📊 Current: <span class="stat-number" id="currentMonth">January 2025</span>
+                </div>
+                <div class="stat-item">
+                    💵 Budget Status: <span class="stat-number" id="budgetStatus">On Track</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container main-content-hidden" id="mainContent">
+        <h2 class="section-title">2025 Financial Report Management</h2>
+        <div class="months-grid" id="monthsGrid">
+            <!-- Month cards will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Intro Video Popup -->
+    <div id="introOverlay" class="intro-overlay">
+        <div class="intro-content">
+            <img src="https://github.com/mohamedsillahkanu/file-repository/raw/98d6a776c09d4c21b1e4fb54d640e152ba14c253/ICF-SL.jpg" alt="ICF-SL Logo" class="intro-logo">
+            <div class="intro-title">ICF-SL Financial System</div>
+            <div class="intro-subtitle">Finance Management Platform</div>
+            <div class="intro-tagline">"Professional Financial Reporting Solutions"</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal small-modal" role="dialog" aria-labelledby="adminLoginTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">🔐 Finance Admin Access</div>
+                <div class="modal-subtitle">Please enter admin credentials to manage financial reports</div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="adminUsername">Admin Username</label>
+                    <input type="text" id="adminUsername" name="adminUsername" placeholder="Enter admin username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="adminPassword" placeholder="Enter password" required>
+                </div>
+                
+                <button type="button" class="modal-btn" onclick="adminLogin()">Login as Admin</button>
+                
+                <div class="error-message" id="adminErrorMessage">
+                    Invalid credentials. Please try again.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weeks Modal -->
+    <div id="weeksModal" class="modal" role="dialog" aria-labelledby="weeksModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="weeksModalTitle">January 2025 - Weekly Financial Reports</div>
+                <div class="modal-subtitle" id="weeksModalSubtitle">Select a week to manage financial reports</div>
+                <button class="close-btn" onclick="closeWeeksModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="weeks-grid" id="weeksGrid">
+                    <!-- Week cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Modal -->
+    <div id="usersModal" class="modal" role="dialog" aria-labelledby="usersModalTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="usersModalTitle">January 2025 - Week 1 - Finance Team Reports</div>
+                <div class="modal-subtitle" id="usersModalSubtitle">Click on a team member to submit their weekly financial report</div>
+                <button class="close-btn" onclick="closeUsersModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="users-grid" id="usersGrid">
+                    <!-- User cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PIN Modal -->
+    <div id="pinModal" class="modal small-modal" role="dialog" aria-labelledby="pinTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">🔑 Enter Your PIN</div>
+                <div class="modal-subtitle" id="pinUserName">Please enter your 4-digit PIN to submit your financial report</div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="userPin">4-Digit PIN</label>
+                    <input type="password" id="userPin" name="userPin" placeholder="Enter your PIN" maxlength="4" required>
+                </div>
+                
+                <button type="button" class="modal-btn" onclick="verifyPin()">Verify PIN</button>
+                <button type="button" class="modal-btn secondary" onclick="closePinModal()">Cancel</button>
+                
+                <div class="error-message" id="pinErrorMessage">
+                    Invalid PIN. Please try again.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Report Form Modal -->
+    <div id="reportModal" class="modal" role="dialog" aria-labelledby="reportTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">💰 Weekly Financial Report Form</div>
+                <div class="modal-subtitle" id="reportUserName">Fill out your weekly financial report</div>
+                <button class="close-btn" onclick="closeReportModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="weeklyRevenue">
+                        <span style="color: #2ea043; font-weight: bold;">Weekly Revenue Generated ($)</span>
+                    </label>
+                    <input type="number" id="weeklyRevenue" name="weeklyRevenue" placeholder="Enter total revenue for this week" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="weeklyExpenses">
+                        <span style="color: #2ea043; font-weight: bold;">Weekly Expenses ($)</span>
+                    </label>
+                    <input type="number" id="weeklyExpenses" name="weeklyExpenses" placeholder="Enter total expenses for this week" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="keyTransactions">
+                        <span style="color: #2ea043; font-weight: bold;">Key Financial Transactions</span>
+                    </label>
+                    <textarea id="keyTransactions" name="keyTransactions" placeholder="List major financial transactions, investments, or financial activities..." rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="budgetVariance">
+                        <span style="color: #2ea043; font-weight: bold;">Budget Variance Analysis</span>
+                    </label>
+                    <textarea id="budgetVariance" name="budgetVariance" placeholder="Compare actual vs budgeted amounts and explain any significant variances..." rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="cashFlowStatus">
+                        <span style="color: #2ea043; font-weight: bold;">Cash Flow Status</span>
+                    </label>
+                    <textarea id="cashFlowStatus" name="cashFlowStatus" placeholder="Report on current cash flow position, collections, and payments..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="financialRisks">
+                        <span style="color: #2ea043; font-weight: bold;">Financial Risks & Concerns</span>
+                    </label>
+                    <textarea id="financialRisks" name="financialRisks" placeholder="Identify any financial risks, late payments, or areas of concern..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="nextWeekProjections">
+                        <span style="color: #2ea043; font-weight: bold;">Next Week Financial Projections</span>
+                    </label>
+                    <textarea id="nextWeekProjections" name="nextWeekProjections" placeholder="Forecast expected revenue, expenses, and financial activities for next week..." rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="actionItems">
+                        <span style="color: #2ea043; font-weight: bold;">Action Items & Follow-ups</span>
+                    </label>
+                    <textarea id="actionItems" name="actionItems" placeholder="List financial tasks, follow-ups, or actions needed..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalNotes">
+                        <span style="color: #2ea043; font-weight: bold;">Additional Financial Notes</span>
+                    </label>
+                    <textarea id="additionalNotes" name="additionalNotes" placeholder="Any other financial insights, market observations, or relevant information..." rows="3"></textarea>
+                </div>
+                
+                <button type="button" class="modal-btn" onclick="submitReport()">Submit Financial Report</button>
+                <button type="button" class="modal-btn secondary" onclick="closeReportModal()">Cancel</button>
+                
+                <div class="error-message" id="reportErrorMessage">
+                    Please fill in all required fields (Revenue, Expenses, Transactions, Budget Variance, and Projections).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Summary Modal -->
+    <div id="summaryModal" class="modal" role="dialog" aria-labelledby="summaryTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📊 Financial Report Summary</div>
+                <div class="modal-subtitle" id="summaryUserName">Complete financial report history</div>
+                <button class="close-btn" onclick="closeSummaryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="summaryContent">
+                    <!-- Summary content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
